@@ -33,8 +33,8 @@ class control {
 
     _LoadModels() {
         const loader = new FBXLoader();
-        loader.setPath('./resources/zombie/');
-        loader.load('mremireh_o_desbiens.fbx', (fbx) => {
+        loader.setPath('./resources/persona/');
+        loader.load('Defeated.fbx', (fbx) => {
             fbx.scale.setScalar(0.1);
             fbx.traverse(c => {
                 c.castShadow = true;
@@ -61,8 +61,8 @@ class control {
             };
 
             const loader = new FBXLoader(this._manager);
-            loader.setPath('./resources/zombie/');
-            loader.load('walk.fbx', (a) => { _OnLoad('walk', a); });
+            loader.setPath('./resources/persona/');
+            loader.load('Walking.fbx', (a) => { _OnLoad('Walking', a); });
             loader.load('idle.fbx', (a) => { _OnLoad('idle', a); });
 
         });
@@ -234,7 +234,7 @@ class personajef extends maquinaestado {
 
     _Init() {
         this._AddState('idle', IdleState);
-        this._AddState('walk', walk);
+        this._AddState('Walking', Walking);
 
     }
 };
@@ -249,17 +249,17 @@ class estado {
     Update() {}
 };
 
-class walk extends estado {
+class Walking extends estado {
     constructor(parent) {
         super(parent);
     }
 
     get Name() {
-        return 'walk';
+        return 'Walking';
     }
 
     Enter(prevState) {
-        const curAction = this._parent._proxy._animations['walk'].action;
+        const curAction = this._parent._proxy._animations['Walking'].action;
         if (prevState) {
             const prevAction = this._parent._proxy._animations[prevState.Name].action;
             curAction.enabled = true;
@@ -307,7 +307,7 @@ class IdleState extends estado {
     Exit() {}
     Update(_, input) {
         if (input._keys.forward || input._keys.backward) {
-            this._parent.SetState('walk');
+            this._parent.SetState('Walking');
         }
     }
 };
